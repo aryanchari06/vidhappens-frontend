@@ -8,7 +8,7 @@ import store from "./Store/store.js";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 
-import { Home } from "./Pages/pagesIndex.js";
+import { Home, Login } from "./Pages/pagesIndex.js";
 
 const router = createBrowserRouter([
   {
@@ -16,9 +16,13 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/',
-        element: <Home />
-      }
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
     ],
   },
 ]);
