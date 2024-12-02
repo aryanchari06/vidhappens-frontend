@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const userData = useSelector((state) => state.auth.userData);
   const authStatus = useSelector((state) => state.auth.authStatus);
   return (
     <header className="bg-black text-white w-full shadow-md sticky top-0 z-50">
@@ -36,12 +37,12 @@ const Header = () => {
 
             <div className="flex items-center gap-4">
               <img
-                src="https://media.licdn.com/dms/image/v2/D5603AQEhBYaldyR_rg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1712338616576?e=2147483647&v=beta&t=bziv00oSahHbPawEkrwZwMN3C2ReWGTKRTRhBkro66k"
+                src={userData.avatar}
                 alt="User Avatar"
                 className="w-12 h-12 rounded-full border-2 border-purple-500 shadow-md"
               />
               <span className="text-md font-medium text-gray-300 hover:text-white transition-all duration-200">
-                User Name
+                {userData.fullname}
               </span>
             </div>
           </div>

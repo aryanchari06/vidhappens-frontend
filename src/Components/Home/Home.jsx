@@ -1,46 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const authStatus = useSelector((state) => state.auth.authStatus);
-  const videos = [
-    {
-      id: 1,
-      title: "How to Code",
-      thumbnail:
-        "https://images.pexels.com/photos/28922850/pexels-photo-28922850/free-photo-of-traditional-japanese-storefront-in-inuyama-japan.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      creator: "John Doe",
-    },
-    {
-      id: 2,
-      title: "React Basics",
-      thumbnail:
-        "https://images.pexels.com/photos/28922850/pexels-photo-28922850/free-photo-of-traditional-japanese-storefront-in-inuyama-japan.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      creator: "Jane Smith",
-    },
-    {
-      id: 3,
-      title: "Tailwind Tutorial",
-      thumbnail:
-        "https://images.pexels.com/photos/28922850/pexels-photo-28922850/free-photo-of-traditional-japanese-storefront-in-inuyama-japan.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      creator: "Tech Guru",
-    },
-    {
-      id: 4,
-      title: "JavaScript Tips",
-      thumbnail:
-        "https://images.pexels.com/photos/28922850/pexels-photo-28922850/free-photo-of-traditional-japanese-storefront-in-inuyama-japan.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      creator: "Dev Ninja",
-    },
-  ];
+  const userData = useSelector((state) => state.auth.userData);
+
+  useEffect(() => {
+    // Check if the accessToken exists in cookies
+    const accessToken = document.cookie
+      .split(";")
+      .find((cookie) => cookie.trim().startsWith("accessToken="));
+
+    const refreshToken = document.cookie
+      .split(";")
+      .find((cookie) => cookie.trim().startsWith("refreshToken="));
+
+    if (accessToken && refreshToken) {
+      console.log("Tokens are present: ", accessToken," ", refreshToken);
+      // You can dispatch an action to update the state or validate the token
+      // For example, you can fetch user data with the access token
+      const token = accessToken.split("=")[1]; // Extract token value
+      // Now you can use this token to fetch the user data
+    } else {
+      console.log("Tokens are not present");
+    }
+  }, []);
+
+  console.log(userData)
+  const [videos, setVideos] = useState([]);
+  const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/videos`;
+
+  // Fetching videos when the component mounts
+  // useEffect(() => {
+  //   if (authStatus) {
+  //     const getAllVideos = async () => {
+  //       try {
+  //         const response = await fetch(url, {
+  //           method: "GET",
+  //           headers: {
+  //             // Add Authorization header if needed
+  //             "Authorization": `Bearer ${userData?.token}`, // Adjust according to how your token is stored
+  //           },
+  //         });
+
+  //         if (response.ok) {
+  //           const responseData = await response.json();
+  //           setVideos(responseData.data); // Assuming the response has a 'data' property with video info
+  //         } else {
+  //           console.log("Failed to fetch videos:", response.statusText);
+  //         }
+  //       } catch (error) {
+  //         console.log("Error fetching videos:", error);
+  //       }
+  //     };
+
+  //     getAllVideos();
+  //   }
+  // }, [authStatus, url, userData?.token]); 
 
   return (
-    <div className="bg-black text-white ">
+    <div className="bg-black text-white">
       {/* Hero Section */}
       {authStatus ? (
         <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {videos.map((video) => (
               <Link
                 key={video.id}
