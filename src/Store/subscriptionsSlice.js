@@ -10,7 +10,7 @@ const subscriptionsSlice = createSlice({
   reducers: {
     setSubscriptionData: (state, action) => {
       state.channels = action.payload;
-      console.log(state.channels)
+      // console.log(state.channels)
     },
     removeSubscriptionData: (state, action) => {
       state.channels = [];

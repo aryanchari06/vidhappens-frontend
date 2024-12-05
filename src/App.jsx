@@ -5,6 +5,7 @@ import { Outlet } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { login as authLogin } from "./Store/authSlice";
 import { setSubscriptionData } from "./Store/subscriptionsSlice";
+import { setStats } from "./Store/statsSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
       );
       if (response.ok) {
         const user = await response.json();
-        // console.log("User:", user.data);
+        console.log("User:", user.data);
         dispatch(authLogin(user.data));
       } else {
         console.error(
@@ -38,9 +39,26 @@ function App() {
       console.log("Error while calling API: ", error);
     }
   };
+  const getChannelStats = async () => {
+    try {
+      const response = await fetch(`${url}/dashboard/stats`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // console.log(result.data[0]);
+        dispatch(setStats(result.data[0]));
+      }
+    } catch (error) {
+      console.log("Error during API call.");
+    }
+  };
 
   useEffect(() => {
     getCurrentUser();
+    getChannelStats();
   }, []);
 
   if (authStatus) {
@@ -53,8 +71,9 @@ function App() {
 
         if (response.ok) {
           const result = await response.json();
-          console.log(result.data);
-          dispatch(setSubscriptionData(result.data));
+          const subscibedChannels = result.data[0].channelsUserSubscribedTo;
+          // console.log();
+          dispatch(setSubscriptionData(subscibedChannels));
         } else {
           console.log("Error while fetching user subscriptions!");
         }

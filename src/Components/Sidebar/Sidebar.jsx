@@ -9,11 +9,12 @@ function Sidebar() {
   const userSubscriptions = useSelector(
     (state) => state.subscriptions.channels
   );
+  // console.log(userSubscriptions);
 
   const dashBoardList = [
     {
       name: "Your Channel",
-      url: "/",
+      url: `/u/${userData.username}`,
     },
     {
       name: "Your Videos",
@@ -21,6 +22,10 @@ function Sidebar() {
     },
     {
       name: "Liked Videos",
+      url: "/",
+    },
+    {
+      name: "Your Playlists",
       url: "/",
     },
     {
@@ -82,7 +87,20 @@ function Sidebar() {
               <ul className="flex flex-col gap-3">
                 {userSubscriptions.map((channel) => {
                   const id = useId();
-                  return <li key={id}>{channel._id}</li>;
+                  return (
+                    <li key={id}>
+                      <Link to={`/c/${channel.username}`}>
+                        <div className="flex gap-2 items-center">
+                          <img
+                            src={channel.avatar}
+                            className="h-8 rounded-full"
+                            alt=""
+                          />
+                          <p>{channel.username}</p>
+                        </div>
+                      </Link>
+                    </li>
+                  );
                 })}
               </ul>
             )}
