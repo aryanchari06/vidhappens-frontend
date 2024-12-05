@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Header, Footer, Sidebar } from "./Components/index";
 import { Outlet } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login as authLogin } from "./Store/authSlice";
+import { setSubscriptionData } from "./Store/subscriptionsSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.auth.authStatus);
+  const userData = useSelector((state) => state.auth.userData);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
   const getCurrentUser = async () => {
     try {
@@ -20,8 +25,8 @@ function App() {
       );
       if (response.ok) {
         const user = await response.json();
-        console.log("User:", user.data);
-        dispatch(authLogin(user.data))
+        // console.log("User:", user.data);
+        dispatch(authLogin(user.data));
       } else {
         console.error(
           "Error fetching user:",
@@ -37,6 +42,29 @@ function App() {
   useEffect(() => {
     getCurrentUser();
   }, []);
+
+  if (authStatus) {
+    const getUserSubscriptions = async () => {
+      try {
+        const response = await fetch(`${url}/subscriptions/c/${userData._id}`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result.data);
+          dispatch(setSubscriptionData(result.data));
+        } else {
+          console.log("Error while fetching user subscriptions!");
+        }
+      } catch (error) {
+        console.log("Error during API call: ", error);
+      }
+    };
+
+    getUserSubscriptions();
+  }
 
   return (
     <div className="w-full bg-black text-white min-h-[80vh]">
