@@ -4,5 +4,6 @@ import Home from "./Home/Home";
 import Sidebar from "./Sidebar/Sidebar";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
+import Videocard from "./Videocard/Videocard";
 
-export { Header, Footer, Home, Sidebar, Login, Signup };
+export { Header, Footer, Home, Sidebar, Login, Signup, Videocard };

@@ -19,6 +19,7 @@ function Login() {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  
 
   // Form submission handler
   const formSubmit = async (data) => {
@@ -36,11 +37,13 @@ function Login() {
       });
 
       if (response.ok) {
-        const responseData = await response.json(); 
-        console.log(responseData);
-        const userData = responseData.data.user
-        dispatch(authLogin(userData)); 
-        navigate("/"); 
+        const responseData = await response.json();
+        // console.log(responseData);
+        const userData = responseData.data;
+        dispatch(
+          authLogin({ user: userData.user, accessToken: userData.accessToken })
+        );
+        navigate("/");
       } else {
         console.error("Login failed", response.statusText);
       }
