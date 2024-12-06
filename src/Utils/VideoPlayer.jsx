@@ -126,10 +126,18 @@ function VideoPlayer() {
       {/* Video Section */}
       <div className="container mx-auto">
         <div className="aspect-w-16 aspect-h-9 bg-black mb-6">
+          {/* <video
+            src={video.videoFile}
+            controls
+            className="w-[120vw] h-[67.5vh]"
+          ></video> */}
           <video
             src={video.videoFile}
             controls
             className="w-[120vw] h-[67.5vh]"
+            style={{
+              accentColor: "#9b5de5", // Purple for buttons, aligns with your theme
+            }}
           ></video>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">

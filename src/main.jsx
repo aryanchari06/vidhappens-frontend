@@ -17,7 +17,8 @@ import {
   LikedVideos,
   UserPlaylists,
   WatchHistory,
-  VideoPlayer
+  VideoPlayer,
+  PlaylistPage
 } from "./Pages/pagesIndex.js";
 
 const router = createBrowserRouter([
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/video/:videoId",
         element: <VideoPlayer />,
+      },
+      {
+        path: "/playlist/:playlistId",
+        element: <PlaylistPage />,
       },
     ],
   },

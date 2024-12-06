@@ -4,8 +4,12 @@ import { VideosLayout } from "../../Utils/indexUtils";
 function LikedVideos() {
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
   const [likedVideos, setLikedVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   const getUserLikedVideos = async () => {
+    setIsLoading(true);
+    setError(null); // Reset error before making a new request
     try {
       const response = await fetch(`${url}/likes/videos`, {
         method: "GET",
@@ -14,13 +18,18 @@ function LikedVideos() {
 
       if (response.ok) {
         const result = await response.json();
-        const videos = result.data;
-        setLikedVideos(videos);
+        setLikedVideos(result.data || []);
       } else {
-        console.error("Error while fetching liked videos");
+        const errorText = `Error: ${response.status} ${response.statusText}`;
+        setError(errorText);
+        console.error(errorText);
       }
     } catch (error) {
-      console.error("Error during API call:", error);
+      const errorMessage = "Error during API call: " + error.message;
+      setError(errorMessage);
+      console.error(errorMessage);
+    } finally {
+      setIsLoading(false); // End loading state
     }
   };
 
@@ -30,8 +39,23 @@ function LikedVideos() {
 
   return (
     <div className="bg-gray-950 text-white min-h-screen p-8">
-      {likedVideos.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-full">
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-screen">
+          <h1 className="text-2xl text-purple-400 font-bold">Loading...</h1>
+        </div>
+      ) : error ? (
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <h1 className="text-3xl font-bold text-red-500">Something went wrong</h1>
+          <p className="text-gray-400 mt-4">{error}</p>
+          <button
+            onClick={getUserLikedVideos}
+            className="mt-6 px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
+          >
+            Retry
+          </button>
+        </div>
+      ) : likedVideos.length === 0 ? (
+        <div className="flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-3xl font-semibold text-purple-400">
             You have not liked any videos
           </h1>

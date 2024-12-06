@@ -7,5 +7,6 @@ import LikedVideos from "./LikedVideos";
 import UserPlaylists from "./UserPlaylists";
 import WatchHistory from "./WatchHistory";
 import VideoPlayer from "./VideoPlayer";
+import PlaylistPage from "./PlaylistPage";
 
-export { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory, VideoPlayer };
+export { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory, VideoPlayer, PlaylistPage };
