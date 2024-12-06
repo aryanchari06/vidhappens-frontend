@@ -8,5 +8,6 @@ import UserChannel from "./UserChannel/UserChannel";
 import UserVideos from "./UserVideos/userVideos";
 import LikedVideos from "./LikedVideos/LikedVideos";
 import UserPlaylists from "./UserPlaylists/UserPlaylists";
+import WatchHistory from "./WatchHistory/WatchHistory";
 
-export { Header, Footer, Home, Sidebar, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists };
+export { Header, Footer, Home, Sidebar, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory };

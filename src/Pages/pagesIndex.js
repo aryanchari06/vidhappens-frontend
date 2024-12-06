@@ -5,5 +5,7 @@ import UserChannel from "./UserChannel";
 import UserVideos from "./UserVideos";
 import LikedVideos from "./LikedVideos";
 import UserPlaylists from "./UserPlaylists";
+import WatchHistory from "./WatchHistory";
+import VideoPlayer from "./VideoPlayer";
 
-export { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists };
+export { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory, VideoPlayer };

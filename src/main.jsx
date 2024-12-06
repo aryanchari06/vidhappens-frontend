@@ -8,7 +8,17 @@ import store from "./Store/store.js";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 
-import { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists } from "./Pages/pagesIndex.js";
+import {
+  Home,
+  Login,
+  Signup,
+  UserChannel,
+  UserVideos,
+  LikedVideos,
+  UserPlaylists,
+  WatchHistory,
+  VideoPlayer
+} from "./Pages/pagesIndex.js";
 
 const router = createBrowserRouter([
   {
@@ -43,14 +53,22 @@ const router = createBrowserRouter([
         path: "/u/:username/playlists",
         element: <UserPlaylists />,
       },
+      {
+        path: "/users/history",
+        element: <WatchHistory />,
+      },
+      {
+        path: "/video/:videoId",
+        element: <VideoPlayer />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </StrictMode>
+  // </StrictMode>
 );

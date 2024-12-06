@@ -18,7 +18,7 @@ function Sidebar() {
         { name: "Your Videos", url: `/u/${userData.username}/videos` || "" },
         { name: "Liked Videos", url: `/u/${userData.username}/liked-videos` },
         { name: "Your Playlists", url: `/u/${userData.username}/playlists` },
-        { name: "Watch History", url: "/" },
+        { name: "Watch History", url: "/users/history" },
       ]);
     }
   }, [authStatus, userData]);
