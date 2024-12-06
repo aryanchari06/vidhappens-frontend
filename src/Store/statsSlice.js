@@ -10,7 +10,7 @@ const statsSlice = createSlice({
   reducers: {
     setStats: (state, action) => {
       state.channelStats = action.payload;
-      // console.log("from slice: ", state.channelStats);
+      console.log("from slice: ", state.channelStats);
     },
     removeStats: (state, action) => {
       state.channelStats = [];

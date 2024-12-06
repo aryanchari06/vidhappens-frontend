@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Videocard } from "../index";
+import { Videocard, VideosLayout } from "../../Utils/indexUtils";
 
 const Home = () => {
   const authStatus = useSelector((state) => state.auth.authStatus);
@@ -34,49 +34,33 @@ const Home = () => {
   }, [authStatus, userData]);
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-black text-white min-h-screen ">
       {/* Hero Section */}
       {authStatus ? (
-        <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videos.map((video) => (
-              <Link
-                key={video._id}
-                to={`/video/${video._id}`}
-                className="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105"
-              >
-                <Videocard
-                  title={video.title}
-                  duration={video.duration}
-                  thumbnail={video.thumbnail}
-                  ownerName={video.videoOwner[0].username}
-                  ownerAvatar={video.videoOwner[0].avatar}
-                  likes={video.likesCount}
-                  views={video.views}
-                />
-              </Link>
-            ))}
+        <div className="container mx-auto px-6 py-12 w-full">
+          <div className="w-full flex items-center justify-center mx-auto">
+            <VideosLayout videos={videos} />
           </div>
         </div>
       ) : (
-        <div className="bg-black text-center py-20 px-6">
-          <h1 className="text-5xl md:text-6xl font-bold text-purple-500 mb-6">
+        <div className="bg-gradient-to-b from-gray-900 via-black to-gray-950 text-center py-20 px-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-purple-500 mb-4">
             Welcome to Clipocalypse
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-gray-400 text-lg max-w-xl mx-auto mb-6">
             Share your favorite videos and discover new content from creators
             around the world.
           </p>
-          <div className="flex gap-6 justify-center">
+          <div className="flex gap-4 justify-center">
             <Link
               to="/login"
-              className="bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+              className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-5 rounded-md text-lg font-medium shadow-md transition-all"
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className="bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+              className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-5 rounded-md text-lg font-medium shadow-md transition-all"
             >
               Signup
             </Link>

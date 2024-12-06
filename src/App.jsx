@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { login as authLogin } from "./Store/authSlice";
 import { setSubscriptionData } from "./Store/subscriptionsSlice";
 import { setStats } from "./Store/statsSlice";
+import { setVideos } from "./Store/videosSlice";
 
 function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.authStatus);
   const userData = useSelector((state) => state.auth.userData);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(!authStatus);
 
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
@@ -55,10 +56,27 @@ function App() {
       console.log("Error during API call.");
     }
   };
+  const getUserVideos = async () => {
+    try {
+      const response = await fetch(`${url}/dashboard/videos`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // console.log("Videos", result.data);
+        dispatch(setVideos(result.data));
+      }
+    } catch (error) {
+      console.log("Error during API call.");
+    }
+  };
 
   useEffect(() => {
     getCurrentUser();
     getChannelStats();
+    getUserVideos();
   }, []);
 
   if (authStatus) {
