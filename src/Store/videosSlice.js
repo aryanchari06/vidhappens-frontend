@@ -10,7 +10,7 @@ const videosSlice = createSlice({
   reducers: {
     setVideos: (state, action) => {
       state.userVideos = action.payload;
-      console.log("From video slice",state.userVideos);
+      // console.log("From video slice",state.userVideos);
     },
     resetVideos: (state, action) => {
       state.userVideos = [];

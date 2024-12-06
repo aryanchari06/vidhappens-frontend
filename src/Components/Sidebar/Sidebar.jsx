@@ -16,8 +16,8 @@ function Sidebar() {
       setDashBoardList([
         { name: "Your Channel", url: `/u/${userData.username}` || "" },
         { name: "Your Videos", url: `/u/${userData.username}/videos` || "" },
-        { name: "Liked Videos", url: "/" },
-        { name: "Your Playlists", url: "/" },
+        { name: "Liked Videos", url: `/u/${userData.username}/liked-videos` },
+        { name: "Your Playlists", url: `/u/${userData.username}/playlists` },
         { name: "Watch History", url: "/" },
       ]);
     }
@@ -40,7 +40,7 @@ function Sidebar() {
                 {dashBoardList.map((item) => (
                   <li
                     className="hover:text-purple-400 transition-transform cursor-pointer"
-                    key={item.url}
+                    key={item.name}
                   >
                     <Link to={item.url}>{item.name}</Link>
                   </li>

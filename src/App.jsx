@@ -7,6 +7,7 @@ import { login as authLogin } from "./Store/authSlice";
 import { setSubscriptionData } from "./Store/subscriptionsSlice";
 import { setStats } from "./Store/statsSlice";
 import { setVideos } from "./Store/videosSlice";
+import { setPlaylists } from "./Store/playlistsSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,24 @@ function App() {
       console.log("Error during API call.");
     }
   };
+  const getUserPlaylists = async () => {
+    try {
+      const response = await fetch(`${url}/playlist/user/${userData._id}`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // console.log(result.data);
+        dispatch(setPlaylists(result.data))
+      } else {
+        console.log("Error while fetching user playlists");
+      }
+    } catch (error) {
+      console.log("Error during API call", error);
+    }
+  };
 
   useEffect(() => {
     getCurrentUser();
@@ -100,6 +119,7 @@ function App() {
       }
     };
 
+    getUserPlaylists();
     getUserSubscriptions();
   }
 

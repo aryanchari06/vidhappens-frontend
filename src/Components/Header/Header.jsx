@@ -54,7 +54,7 @@ const Header = () => {
       <div className="container px-4 py-2 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo/Name */}
         <div className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition-all duration-300 cursor-pointer w-1/6">
-          Clipocalypse
+          <Link to="/">Clipocalypse</Link>
         </div>
 
         {/* Search Bar */}
@@ -64,7 +64,7 @@ const Header = () => {
             placeholder="Search for videos, channels..."
             className="px-4 py-2 w-full rounded-l-lg bg-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
           />
-          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-r-lg transition-all duration-200">
+          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-r-lg transition-all duration-200 text-md">
             Search
           </button>
         </div>
@@ -74,16 +74,17 @@ const Header = () => {
           <div className="flex items-center gap-5 w-2/6">
             <Link
               to="/upload"
-              className="bg-purple-500 hover:bg-purple-600 px-4 py-2 text-white rounded-lg text-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+              className="bg-purple-500 hover:bg-purple-600 px-4 py-2 text-white rounded-lg text-md font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              Upload
+              <i className="fa-solid fa-cloud-arrow-up"></i>&nbsp; Upload a
+              Video
             </Link>
 
             <div
               className="flex flex-col relative items-center justify-center user-menu"
               onClick={() => setIsLogoutVisible(!isLogoutVisible)}
             >
-              <div className="flex items-center gap-4 cursor-pointer">
+              <div className="flex items-center gap-3 cursor-pointer">
                 <img
                   src={userData.avatar}
                   alt="User Avatar"
