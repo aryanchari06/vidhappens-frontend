@@ -27,9 +27,6 @@ function UserPlaylists() {
         </div>
       ) : (
         <div className="container mx-auto">
-          <h1 className="text-3xl font-extrabold text-purple-400 mb-8">
-            Your Playlists
-          </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {playlists.map((playlist) => (
               <Link
@@ -42,7 +39,7 @@ function UserPlaylists() {
                   <img
                     src={
                       playlist.playlistVideos[0]?.thumbnail ||
-                      "https://via.placeholder.com/300"
+                      "https://images.steelcase.com/image/upload/c_fill,q_auto,f_auto,h_900,w_1600/v1567243086/6130_1000.jpg"
                     }
                     alt={playlist.title}
                     className="w-full h-48 rounded-t-xl object-cover"
@@ -54,7 +51,7 @@ function UserPlaylists() {
                 {/* Playlist Info */}
                 <div className="p-4">
                   <h3 className="text-xl font-semibold truncate group-hover:text-purple-400">
-                    {playlist.title}
+                    {playlist.name}
                   </h3>
                   <p className="text-sm text-gray-400 mt-2 truncate">
                     {playlist.description || "No description provided"}

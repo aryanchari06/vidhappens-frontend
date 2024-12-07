@@ -8,6 +8,7 @@ import { setSubscriptionData } from "./Store/subscriptionsSlice";
 import { setStats } from "./Store/statsSlice";
 import { setVideos } from "./Store/videosSlice";
 import { setPlaylists } from "./Store/playlistsSlice";
+import { setTweets } from "./Store/tweetsSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,12 +84,29 @@ function App() {
       if (response.ok) {
         const result = await response.json();
         // console.log(result.data);
-        dispatch(setPlaylists(result.data))
+        dispatch(setPlaylists(result.data));
       } else {
         console.log("Error while fetching user playlists");
       }
     } catch (error) {
       console.log("Error during API call", error);
+    }
+  };
+  const getUserTweets = async () => {
+    try {
+      const response = await fetch(`${url}/tweets/user/${userData._id}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.ok) {
+        const result = await response.json();
+        // console.log(result);
+        dispatch(setTweets(result.data));
+      } else {
+        console.log("Error while fetching user tweets");
+      }
+    } catch (error) {
+      console.log("Error during API call: ", error);
     }
   };
 
@@ -121,6 +139,7 @@ function App() {
 
     getUserPlaylists();
     getUserSubscriptions();
+    getUserTweets();
   }
 
   return (

@@ -6,14 +6,17 @@ import {
   faEye,
   faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 function VideoPlayer() {
   const { videoId } = useParams();
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
   const [video, setVideo] = useState(null);
   const [comments, setComments] = useState([]);
-  const [showOptions, setShowOptions] = useState(false);
   const [newComment, setNewComment] = useState("");
+
+  const playlists = useSelector((state) => state.playlists.playlists);
+  const [showPlaylists, setShowPlaylists] = useState(false);
 
   const getVideoDetails = async () => {
     try {
@@ -24,7 +27,6 @@ function VideoPlayer() {
       if (response.ok) {
         const result = await response.json();
         setVideo(result.data[0]);
-        console.log(result.data[0]);
       } else {
         console.error("Error fetching video details");
       }
@@ -41,7 +43,6 @@ function VideoPlayer() {
       });
       if (response.ok) {
         const result = await response.json();
-        // console.log(result.data)
         setComments(result.data);
       } else {
         console.error("Error fetching video comments");
@@ -106,12 +107,34 @@ function VideoPlayer() {
     }
   };
 
+  const handleAddToPlaylist = async (playlistId) => {
+    try {
+      const response = await fetch(
+        `${url}/playlist/add/${videoId}/${playlistId}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.log("Error while adding video to playlist");
+      }
+    } catch (error) {
+      console.log("Error during api call: ", error);
+    }
+  };
+
   useEffect(() => {
     getVideoDetails();
     getVideoComments();
   }, [videoId]);
 
-  const toggleOptions = () => setShowOptions(!showOptions);
+  const togglePlaylists = () => {
+    setShowPlaylists(!showPlaylists);
+  };
 
   if (!video) {
     return (
@@ -126,11 +149,6 @@ function VideoPlayer() {
       {/* Video Section */}
       <div className="container mx-auto">
         <div className="aspect-w-16 aspect-h-9 bg-black mb-6">
-          {/* <video
-            src={video.videoFile}
-            controls
-            className="w-[120vw] h-[67.5vh]"
-          ></video> */}
           <video
             src={video.videoFile}
             controls
@@ -142,17 +160,27 @@ function VideoPlayer() {
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
           <h1 className="text-2xl font-bold mb-4 sm:mb-0">{video.title}</h1>
-          <div className="relative">
-            <FontAwesomeIcon
-              icon={faEllipsisV}
-              className="text-xl cursor-pointer"
-              onClick={toggleOptions}
-            />
-            {showOptions && (
-              <div className="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-md overflow-hidden">
-                <button className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700">
-                  Add to Playlist
-                </button>
+          <div
+            className="relative"
+            onClick={togglePlaylists}
+          >
+            <button className="text-gray-300 flex items-center space-x-2 hover:bg-gray-700 px-4 py-2">
+              <span>Add to Playlist</span>
+              {/* <FontAwesomeIcon icon={faEllipsisV} /> */}
+            </button>
+            {showPlaylists && (
+              <div className="absolute right-0 mt-2 flex flex-col space-y-2 bg-gray-800 shadow-lg rounded-md p-2">
+                {playlists.map((playlist) => (
+                  <button
+                    key={playlist._id}
+                    className="text-gray-300 hover:bg-gray-700 px-4 py-2"
+                    onClick={() => {
+                      handleAddToPlaylist(playlist._id);
+                    }}
+                  >
+                    {playlist.name}
+                  </button>
+                ))}
               </div>
             )}
           </div>
@@ -229,9 +257,7 @@ function VideoPlayer() {
                 </div>
                 <div className="mt-2 flex items-center space-x-4 text-gray-400">
                   <button
-                    onClick={() => {
-                      handleCommentLike(comment._id);
-                    }}
+                    onClick={() => handleCommentLike(comment._id)}
                     className="flex items-center space-x-1"
                   >
                     <FontAwesomeIcon

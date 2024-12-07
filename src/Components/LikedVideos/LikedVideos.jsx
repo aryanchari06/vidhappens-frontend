@@ -21,7 +21,7 @@ function LikedVideos() {
         // console.log("API Response:", result); // Log full API response
         if (result && Array.isArray(result.data)) {
           const videos = result.data;
-          const liked = videos.map((video)=>video.likedVideos[0])
+          const liked = videos.map((video) => video.likedVideos[0]);
           setLikedVideos(liked);
           console.log("Videos set:", result.data); // Log the actual videos
         } else {
