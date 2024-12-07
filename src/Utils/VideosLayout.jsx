@@ -13,14 +13,7 @@ function VideosLayout({ videos }) {
     }
   }, [videos]);
 
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-red-500">Something went wrong</h1>
-        <p className="text-gray-400 mt-4">{error}</p>
-      </div>
-    );
-  }
+
 
   if (!videos || videos.length === 0) {
     return (

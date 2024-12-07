@@ -5,6 +5,7 @@ import { VideosLayout } from "../../Utils/indexUtils";
 
 function UserVideos() {
   const videos = useSelector((state) => state.videos.userVideos);
+  console.log(videos)
   const userData = useSelector((state) => state.auth.userData);
 
   // Fallback UI for when userData is null or undefined
