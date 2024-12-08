@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
@@ -160,10 +160,7 @@ function VideoPlayer() {
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
           <h1 className="text-2xl font-bold mb-4 sm:mb-0">{video.title}</h1>
-          <div
-            className="relative"
-            onClick={togglePlaylists}
-          >
+          <div className="relative" onClick={togglePlaylists}>
             <button className="text-gray-300 flex items-center space-x-2 hover:bg-gray-700 px-4 py-2">
               <span>Add to Playlist</span>
               {/* <FontAwesomeIcon icon={faEllipsisV} /> */}
@@ -191,7 +188,9 @@ function VideoPlayer() {
             alt={video.videoOwner[0].username}
             className="w-12 h-12 rounded-full"
           />
-          <p className="text-lg">{video.videoOwner[0].username}</p>
+          <Link to={`/c/${video.videoOwner[0].username}`} className="text-lg">
+            {video.videoOwner[0].username}
+          </Link>
         </div>
         <div className="flex items-center space-x-6 mt-4 text-gray-400">
           <div className="flex items-center space-x-2">

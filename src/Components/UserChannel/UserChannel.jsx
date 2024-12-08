@@ -137,9 +137,11 @@ const UserChannel = ({ user }) => {
       </div>
 
       {/* User Tweets Section */}
-      <div className="mt-8 px-6 pb-6">
+      {/* <div className="mt-8 px-6 pb-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-purple-400">{username}'s Tweets</h2>
+          <h2 className="text-2xl font-bold text-purple-400">
+            {username}'s Tweets
+          </h2>
           {authStatus && (
             <button
               onClick={toggleTweetInput}
@@ -225,7 +227,7 @@ const UserChannel = ({ user }) => {
         ) : (
           <p className="text-gray-400">Please log in to view tweets.</p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

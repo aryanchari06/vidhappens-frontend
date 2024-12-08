@@ -8,5 +8,18 @@ import UserPlaylists from "./UserPlaylists";
 import WatchHistory from "./WatchHistory";
 import VideoPlayer from "./VideoPlayer";
 import PlaylistPage from "./PlaylistPage";
+import ChannelLayout from "./ChannelLayout";
 
-export { Home, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory, VideoPlayer, PlaylistPage };
+export {
+  Home,
+  Login,
+  Signup,
+  UserChannel,
+  UserVideos,
+  LikedVideos,
+  UserPlaylists,
+  WatchHistory,
+  VideoPlayer,
+  PlaylistPage,
+  ChannelLayout,
+};

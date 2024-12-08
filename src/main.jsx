@@ -18,7 +18,8 @@ import {
   UserPlaylists,
   WatchHistory,
   VideoPlayer,
-  PlaylistPage
+  PlaylistPage,
+  ChannelLayout,
 } from "./Pages/pagesIndex.js";
 
 const router = createBrowserRouter([
@@ -66,14 +67,18 @@ const router = createBrowserRouter([
         path: "/playlist/:playlistId",
         element: <PlaylistPage />,
       },
+      {
+        path: "/c/:channelUsername",
+        element: <ChannelLayout />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
   // </StrictMode>
 );

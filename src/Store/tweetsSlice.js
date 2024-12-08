@@ -10,7 +10,7 @@ const tweetsSlice = createSlice({
   reducers: {
     setTweets: (state, action) => {
       state.tweets = action.payload;
-      console.log("From tweets Slice: ", state.tweets);
+      // console.log("From tweets Slice: ", state.tweets);
     },
     clearTweets: (state, action) => {
       state.tweets = [];

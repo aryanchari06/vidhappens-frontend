@@ -14,11 +14,12 @@ function Sidebar() {
   useEffect(() => {
     if (authStatus && userData) {
       setDashBoardList([
-        { name: "Your Channel", url: `/u/${userData.username}` || "" },
+        { name: "Your Channel", url: `/c/${userData.username}` || "" },
+        // { name: "Channel Stats", url: `/u/${userData.username}` || "" },
         { name: "Your Videos", url: `/u/${userData.username}/videos` || "" },
-        { name: "Liked Videos", url: `/u/${userData.username}/liked-videos` },
         { name: "Your Playlists", url: `/u/${userData.username}/playlists` },
         { name: "Your Tweets", url: `/u/${userData.username}/tweets` },
+        { name: "Liked Videos", url: `/u/${userData.username}/liked-videos` },
         { name: "Watch History", url: "/users/history" },
       ]);
     }

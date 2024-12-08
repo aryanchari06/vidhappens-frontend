@@ -14,22 +14,19 @@ function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.authStatus);
   const userData = useSelector((state) => state.auth.userData);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(!authStatus);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
   const getCurrentUser = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/users/current-user`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${url}/users/current-user`, {
+        method: "GET",
+        credentials: "include",
+      });
       if (response.ok) {
         const user = await response.json();
-        console.log("User:", user.data);
+        console.log(user.data)
         dispatch(authLogin(user.data));
       } else {
         console.error(
@@ -39,113 +36,69 @@ function App() {
         );
       }
     } catch (error) {
-      console.log("Error while calling API: ", error);
+      console.error("Error while calling API: ", error);
     }
   };
-  const getChannelStats = async () => {
-    try {
-      const response = await fetch(`${url}/dashboard/stats`, {
-        method: "GET",
-        credentials: "include",
-      });
 
-      if (response.ok) {
-        const result = await response.json();
-        // console.log(result.data[0]);
-        dispatch(setStats(result.data[0]));
-      }
-    } catch (error) {
-      console.log("Error during API call.");
-    }
-  };
-  const getUserVideos = async () => {
-    try {
-      const response = await fetch(`${url}/dashboard/videos`, {
-        method: "GET",
-        credentials: "include",
-      });
+  const fetchUserData = async () => {
+    if (!userData?._id) return;
 
-      if (response.ok) {
-        const result = await response.json();
-        // console.log("Videos", result.data);
-        dispatch(setVideos(result.data));
-      }
-    } catch (error) {
-      console.log("Error during API call.");
-    }
-  };
-  const getUserPlaylists = async () => {
     try {
-      const response = await fetch(`${url}/playlist/user/${userData._id}`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const [videosRes, playlistsRes, subscriptionsRes, statsRes, tweetsRes] =
+        await Promise.all([
+          fetch(`${url}/dashboard/videos`, { method: "GET", credentials: "include" }),
+          fetch(`${url}/playlist/user/${userData._id}`, { method: "GET", credentials: "include" }),
+          fetch(`${url}/subscriptions/c/${userData._id}`, { method: "GET", credentials: "include" }),
+          fetch(`${url}/dashboard/stats`, { method: "GET", credentials: "include" }),
+          fetch(`${url}/tweets/user/${userData._id}`, { method: "GET", credentials: "include" }),
+        ]);
 
-      if (response.ok) {
-        const result = await response.json();
-        // console.log(result.data);
-        dispatch(setPlaylists(result.data));
-      } else {
-        console.log("Error while fetching user playlists");
+      if (videosRes.ok) {
+        const videos = await videosRes.json();
+        dispatch(setVideos(videos.data));
+      }
+
+      if (playlistsRes.ok) {
+        const playlists = await playlistsRes.json();
+        dispatch(setPlaylists(playlists.data));
+      }
+
+      if (subscriptionsRes.ok) {
+        const subscriptions = await subscriptionsRes.json();
+        const subscribedChannels = subscriptions.data[0]?.channelsUserSubscribedTo;
+        // console.log(subscribedChannels)
+        dispatch(setSubscriptionData(subscribedChannels));
+      }
+
+      if (statsRes.ok) {
+        const stats = await statsRes.json();
+        dispatch(setStats(stats.data[0]));
+      }
+
+      if (tweetsRes.ok) {
+        const tweets = await tweetsRes.json();
+        // console.log(tweets)
+        dispatch(setTweets(tweets.data));
       }
     } catch (error) {
-      console.log("Error during API call", error);
-    }
-  };
-  const getUserTweets = async () => {
-    try {
-      const response = await fetch(`${url}/tweets/user/${userData._id}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.ok) {
-        const result = await response.json();
-        // console.log(result);
-        dispatch(setTweets(result.data));
-      } else {
-        console.log("Error while fetching user tweets");
-      }
-    } catch (error) {
-      console.log("Error during API call: ", error);
+      console.error("Error while fetching user data:", error);
     }
   };
 
   useEffect(() => {
     getCurrentUser();
-    getChannelStats();
-    getUserVideos();
   }, []);
 
-  if (authStatus) {
-    const getUserSubscriptions = async () => {
-      try {
-        const response = await fetch(`${url}/subscriptions/c/${userData._id}`, {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          const subscibedChannels = result.data[0].channelsUserSubscribedTo;
-          // console.log();
-          dispatch(setSubscriptionData(subscibedChannels));
-        } else {
-          console.log("Error while fetching user subscriptions!");
-        }
-      } catch (error) {
-        console.log("Error during API call: ", error);
-      }
-    };
-
-    getUserPlaylists();
-    getUserSubscriptions();
-    getUserTweets();
-  }
+  useEffect(() => {
+    if (authStatus) {
+      fetchUserData();
+    }
+  }, [authStatus, userData?._id]);
 
   return (
     <div className="w-full bg-black text-white min-h-[80vh]">
       {/* Header Section */}
-      <div className="flex items-center px-4 py-4 bg-black shadow-lg">
+      <div className="flex items-center px-4 py-2 bg-black shadow-lg">
         <button
           className="text-white focus:outline-none mr-4"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}

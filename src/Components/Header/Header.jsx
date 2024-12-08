@@ -50,8 +50,8 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-black text-white w-full shadow-md sticky top-0 z-50">
-      <div className="container px-4 py-2 flex flex-col md:flex-row justify-between items-center gap-6">
+    <header className="bg-black text-white w-full sticky shadow-md  top-0 z-50">
+      <div className="container px-1  flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo/Name */}
         <div className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition-all duration-300 cursor-pointer w-1/6">
           <Link to="/">Clipocalypse</Link>
@@ -81,7 +81,7 @@ const Header = () => {
             </Link>
 
             <div
-              className="flex flex-col relative items-center justify-center user-menu"
+              className="relative flex flex-col items-center justify-center user-menu"
               onClick={() => setIsLogoutVisible(!isLogoutVisible)}
             >
               <div className="flex items-center gap-3 cursor-pointer">
@@ -90,18 +90,26 @@ const Header = () => {
                   alt="User Avatar"
                   className="w-12 h-12 rounded-full border-2 border-purple-500 shadow-md"
                 />
-                <span className="text-md font-medium text-gray-300 hover:text-white transition-all duration-200">
+                <span className="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
                   {userData.fullname}
                 </span>
               </div>
 
               {isLogoutVisible && (
-                <button
-                  className="absolute top-full mt-2 bg-gray-900 text-red-500 text-lg font-semibold px-4 py-2 rounded-md shadow-lg transition-all duration-200 hover:bg-red-500 hover:text-white"
-                  onClick={logoutUser}
-                >
-                  Logout
-                </button>
+                <div className="absolute top-full mt-2 flex flex-col gap-2 w-40 rounded-md shadow-lg">
+                  <Link
+                    to={`/u/${userData.username}`}
+                    className="text-base text-center font-semibold text-gray-300 bg-gray-900 px-4 py-2 rounded-md transition-colors duration-200 hover:bg-purple-500 hover:text-white"
+                  >
+                    Channel Stats
+                  </Link>
+                  <button
+                    className="text-base font-semibold text-gray-300 bg-gray-900 px-4 py-2 rounded-md transition-colors duration-200 hover:bg-red-500 hover:text-white"
+                    onClick={logoutUser}
+                  >
+                    Logout
+                  </button>
+                </div>
               )}
             </div>
           </div>
