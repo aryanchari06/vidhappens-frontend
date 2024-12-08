@@ -9,6 +9,7 @@ import WatchHistory from "./WatchHistory";
 import VideoPlayer from "./VideoPlayer";
 import PlaylistPage from "./PlaylistPage";
 import ChannelLayout from "./ChannelLayout";
+import TweetsPage from './TweetsPage'
 
 export {
   Home,
@@ -22,4 +23,5 @@ export {
   VideoPlayer,
   PlaylistPage,
   ChannelLayout,
+  TweetsPage
 };

@@ -18,7 +18,7 @@ function Sidebar() {
         // { name: "Channel Stats", url: `/u/${userData.username}` || "" },
         { name: "Your Videos", url: `/u/${userData.username}/videos` || "" },
         { name: "Your Playlists", url: `/u/${userData.username}/playlists` },
-        { name: "Your Tweets", url: `/u/${userData.username}/tweets` },
+        { name: "Your Tweets", url: `/u/tweets` },
         { name: "Liked Videos", url: `/u/${userData.username}/liked-videos` },
         { name: "Watch History", url: "/users/history" },
       ]);

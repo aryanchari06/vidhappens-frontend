@@ -9,5 +9,19 @@ import UserVideos from "./UserVideos/userVideos";
 import LikedVideos from "./LikedVideos/LikedVideos";
 import UserPlaylists from "./UserPlaylists/UserPlaylists";
 import WatchHistory from "./WatchHistory/WatchHistory";
+import Tweets from "./Tweets/Tweets";
 
-export { Header, Footer, Home, Sidebar, Login, Signup, UserChannel, UserVideos, LikedVideos, UserPlaylists, WatchHistory };
+export {
+  Header,
+  Footer,
+  Home,
+  Sidebar,
+  Login,
+  Signup,
+  UserChannel,
+  UserVideos,
+  LikedVideos,
+  UserPlaylists,
+  WatchHistory,
+  Tweets,
+};
