@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Videocard, VideosLayout } from "../../Utils/indexUtils";
+import { clearQueryVideos } from "../../Store/queryVideosSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const authStatus = useSelector((state) => state.auth.authStatus);
   const userData = useSelector((state) => state.auth.userData);
 
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
   const [videos, setVideos] = useState([]);
+
+  const queryVideos = useSelector((state) => state.queryVideos.videos);
 
   const fetchAllVideos = async () => {
     try {
@@ -21,6 +26,7 @@ const Home = () => {
         const videos = result.data;
         // console.log(videos.docs);
         setVideos(videos.docs);
+        // dispatch(clearQueryVideos());
       } else {
         console.log("Error while fetching videos: ", response.statusText);
       }
@@ -30,8 +36,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (authStatus) fetchAllVideos();
-  }, [authStatus, userData]);
+    if (authStatus) {
+      if (queryVideos.length > 0) {
+        // Show queried videos if available
+        setVideos(queryVideos);
+      } else {
+        // Fetch all videos if no queried videos are present
+        fetchAllVideos();
+      }
+    }
+  }, [authStatus, queryVideos]);
 
   return (
     <div className="bg-black text-white min-h-screen ">

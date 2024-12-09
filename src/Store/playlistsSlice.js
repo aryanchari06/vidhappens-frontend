@@ -10,7 +10,7 @@ const playlistsSlice = createSlice({
   reducers: {
     setPlaylists: (state, action) => {
       state.playlists = action.payload;
-      // console.log("From playlists slice: ", state.playlists);
+      console.log("From playlists slice: ", state.playlists);
     },
     resetPlaylists: (state, action) => {
       state.playlists = [];

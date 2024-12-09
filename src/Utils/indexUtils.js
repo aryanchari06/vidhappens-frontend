@@ -1,9 +1,19 @@
 import Input from "./Input";
-import AuthBtns from './AuthBtns'
+import AuthBtns from "./AuthBtns";
 import Videocard from "./Videocard";
 import VideosLayout from "./VideosLayout";
 import VideoPlayer from "./VideoPlayer";
 import PlaylistPage from "./PlaylistPage";
 import ChannelLayout from "./ChannelLayout";
+import VideoUpload from "./VideoUpload";
 
-export { Input, AuthBtns, Videocard, VideosLayout, VideoPlayer, PlaylistPage, ChannelLayout };
+export {
+  Input,
+  AuthBtns,
+  Videocard,
+  VideosLayout,
+  VideoPlayer,
+  PlaylistPage,
+  ChannelLayout,
+  VideoUpload,
+};

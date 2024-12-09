@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout as authLogout } from "../../Store/authSlice";
 import { removeSubscriptionData } from "../../Store/subscriptionsSlice";
+import { setQueryVideos, clearQueryVideos } from "../../Store/queryVideosSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const [queryText, setQueryText] = useState("");
 
   const userData = useSelector((state) => state.auth.userData);
   const authStatus = useSelector((state) => state.auth.authStatus);
@@ -13,6 +15,10 @@ const Header = () => {
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
   const [isLogoutVisible, setIsLogoutVisible] = useState(false);
+
+  const handleLogoClick = () => {
+    dispatch(clearQueryVideos());
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -49,24 +55,68 @@ const Header = () => {
     }
   };
 
+  const getQueriedVideos = async (e) => {
+    e.preventDefault();
+    try {
+      const query = {
+        page: 1,
+        limit: 10,
+        query: queryText, // Search term
+        sortBy: "createdAt",
+        sortType: 1,
+      };
+
+      const params = new URLSearchParams(query).toString();
+
+      const response = await fetch(`${url}/videos/?${params}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.data.docs);
+        dispatch(setQueryVideos(result.data.docs));
+      } else {
+        console.log("Error while fetching queried videos");
+      }
+    } catch (error) {
+      console.log("Error during API call: ", error);
+    }
+  };
+
   return (
-    <header className="bg-black text-white w-full sticky shadow-md  top-0 z-50">
+    <header className="bg-black text-white w-full sticky shadow-md py-2 top-0 z-50">
       <div className="container px-1  flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo/Name */}
-        <div className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition-all duration-300 cursor-pointer w-1/6">
+        <div
+          onClick={handleLogoClick}
+          className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition-all duration-300 cursor-pointer w-1/6"
+        >
           <Link to="/">Clipocalypse</Link>
         </div>
 
         {/* Search Bar */}
         <div className="flex items-center w-4/6 mx-4 ">
-          <input
-            type="text"
-            placeholder="Search for videos, channels..."
-            className="px-4 py-2 w-full rounded-l-lg bg-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
-          />
-          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-r-lg transition-all duration-200 text-md">
-            Search
-          </button>
+          <form onSubmit={getQueriedVideos} className="flex items-center w-full mx-4">
+            <input
+              type="text"
+              placeholder="Search for videos..."
+              className="px-4 py-2 w-full rounded-l-lg bg-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+              onChange={(e) => {
+                setQueryText(e.currentTarget.value);
+              }}
+            />
+            <button
+              // onClick={getQueriedVideos}
+              className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-r-lg transition-all duration-200 text-md"
+            >
+              Search
+            </button>
+          </form>
         </div>
 
         {/* User Avatar and Name */}

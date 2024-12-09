@@ -5,6 +5,7 @@ import statsSlice from "./statsSlice";
 import videosSlice from "./videosSlice";
 import playlistsSlice from "./playlistsSlice";
 import tweetsSlice from "./tweetsSlice";
+import queryVideosSlice from "./queryVideosSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     videos: videosSlice,
     playlists: playlistsSlice,
     tweets: tweetsSlice,
+    queryVideos: queryVideosSlice,
   },
 });
 

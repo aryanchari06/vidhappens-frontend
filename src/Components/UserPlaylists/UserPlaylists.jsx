@@ -45,7 +45,8 @@ function UserPlaylists() {
                     className="w-full h-48 rounded-t-xl object-cover"
                   />
                   <span className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-3 py-1 rounded-full">
-                    {playlist.videos.length} Videos
+                    {playlist.playlistVideos.length}{" "}
+                    {playlist.playlistVideos.length === 1 ? "Video" : "Videos"}
                   </span>
                 </div>
                 {/* Playlist Info */}
