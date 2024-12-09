@@ -5,6 +5,8 @@ import { Videocard } from "./indexUtils";
 function VideosLayout({ videos }) {
   const [error, setError] = useState(null);
 
+  // console.log(videos)
+
   useEffect(() => {
     if (!Array.isArray(videos)) {
       setError("Invalid videos data. Please try again later.");
@@ -42,7 +44,7 @@ function VideosLayout({ videos }) {
             thumbnail={video.thumbnail}
             ownerName={video.videoOwner?.[0]?.username || "Unknown User"}
             ownerAvatar={video.videoOwner?.[0]?.avatar || ""}
-            likes={video.likes || 0}
+            likes={video.likesCount || 0}
             views={video.views || 0}
           />
         </Link>
