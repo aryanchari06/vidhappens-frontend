@@ -7,13 +7,20 @@ import {
   faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { DeleteVideoModal } from "./indexUtils";
 
 function VideoPlayer() {
+  const userData = useSelector((state) => state.auth.userData);
+  const [isUserVideo, setIsUserVideo] = useState(false);
   const { videoId } = useParams();
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
   const [video, setVideo] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const playlists = useSelector((state) => state.playlists.playlists);
   const [showPlaylists, setShowPlaylists] = useState(false);
@@ -127,10 +134,53 @@ function VideoPlayer() {
     }
   };
 
+  const handleDelete = async ({ videoId }) => {
+    deleteVideo(videoId);
+    deleteLikeDocument(videoId);
+  };
+  const deleteVideo = async (videoId) => {
+    try {
+      const response = await fetch(`${url}/videos/${videoId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.log("Error while deleting video");
+      }
+    } catch (error) {
+      console.log("Error during api call: ", error);
+    }
+  };
+  const deleteLikeDocument = async (videoId) => {
+    try {
+      const response = await fetch(`${url}/likes/delete-doc/${videoId}`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.log("Error while deleting the like document");
+      }
+    } catch (error) {
+      console.log("Error during API call: ", error);
+    }
+  };
+
   useEffect(() => {
     getVideoDetails();
     getVideoComments();
   }, [videoId]);
+
+  useEffect(() => {
+    if (video) {
+      if (video.owner === userData._id) setIsUserVideo(true);
+    }
+  }, [video]);
 
   const togglePlaylists = () => {
     setShowPlaylists(!showPlaylists);
@@ -159,7 +209,10 @@ function VideoPlayer() {
           ></video>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-          <h1 className="text-2xl font-bold mb-4 sm:mb-0">{video.title}</h1>
+          <div className="flex flex-col items-start gap-2">
+            <h1 className="text-2xl font-bold mb-4 sm:mb-0">{video.title}</h1>
+            <p className="text-gray-400">{video.description}</p>
+          </div>
           <div className="relative" onClick={togglePlaylists}>
             <button className="text-gray-300 flex items-center space-x-2 hover:bg-gray-700 px-4 py-2">
               <span>Add to Playlist</span>
@@ -209,8 +262,22 @@ function VideoPlayer() {
             />
             <span>{video.videoLikesCount} Likes</span>
           </button>
+          <button
+            className={`${
+              isUserVideo ? "block" : "hidden"
+            } bg-red-600 text-white px-4 py-2 rounded-md`}
+            onClick={openModal}
+          >
+            Delete video
+          </button>
         </div>
       </div>
+
+      <DeleteVideoModal
+        handleDelete={() => handleDelete(video._id)}
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+      />
 
       {/* Comments Section */}
       <div className="container mx-auto mt-12">

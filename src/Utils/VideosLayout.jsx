@@ -32,20 +32,20 @@ function VideosLayout({ videos }) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {videos.map((video) => (
+      {videos.slice().reverse().map((video) => (
         <Link
-          key={video._id}
-          to={`/video/${video._id}`}
+          key={video?._id}
+          to={`/video/${video?._id}`}
           className="bg-gray-800 hover:bg-gray-700 rounded-lg shadow-md transition-all group"
         >
           <Videocard
-            title={video.title}
-            duration={video.duration}
-            thumbnail={video.thumbnail}
-            ownerName={video.videoOwner?.[0]?.username || "Unknown User"}
-            ownerAvatar={video.videoOwner?.[0]?.avatar || ""}
-            likes={video.likesCount || 0}
-            views={video.views || 0}
+            title={video?.title}
+            duration={video?.duration}
+            thumbnail={video?.thumbnail}
+            ownerName={video?.videoOwner?.[0]?.username || "Unknown User"}
+            ownerAvatar={video?.videoOwner?.[0]?.avatar || ""}
+            likes={video?.likesCount || 0}
+            views={video?.views || 0}
           />
         </Link>
       ))}

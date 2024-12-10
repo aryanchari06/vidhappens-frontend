@@ -98,7 +98,7 @@ const Header = () => {
         onClick={handleLogoClick}
         className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition duration-300 cursor-pointer"
       >
-        <Link to="/">Clipocalypse</Link>
+        <Link to="/">PixelPlay</Link>
       </div>
   
       {/* Search Bar */}
@@ -123,7 +123,7 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <Link
             to="/upload"
-            className="bg-purple-500 text-md hover:bg-purple-600 px-4 py-2 text-white rounded-lg font-semibold transition duration-200 shadow hover:shadow-lg flex items-center w-full"
+            className="bg-purple-500 text-md hover:bg-purple-600 pl-4 py-2 text-white rounded-lg font-semibold transition duration-200 shadow hover:shadow-lg flex items-center w-full"
           >
             <i className="fa-solid fa-cloud-arrow-up"></i>&nbsp;<span> Upload a Video</span>
           </Link>

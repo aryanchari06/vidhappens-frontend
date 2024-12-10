@@ -21,9 +21,11 @@ function LikedVideos() {
         // console.log("API Response:", result); // Log full API response
         if (result && Array.isArray(result.data)) {
           const videos = result.data;
-          const liked = videos.map((video) => video.likedVideos[0]);
-          setLikedVideos(liked);
-          console.log("Videos set:", result.data); // Log the actual videos
+          const likedVideoDocuments = videos.map((video) => {
+            if (video?.likedVideos[0]) return video.likedVideos[0];
+          });
+          setLikedVideos(likedVideoDocuments);
+          console.log("Liked documents set:", result.data); // Log the actual videos
         } else {
           setError("Invalid response format: Data is not an array.");
           console.error("Invalid data:", result.data);
@@ -45,9 +47,9 @@ function LikedVideos() {
     getUserLikedVideos();
   }, []);
 
-  useEffect(() => {
-    console.log("Liked Videos updated:", likedVideos); // Log state changes
-  }, [likedVideos]);
+  // useEffect(() => {
+  //   console.log("Liked Videos updated:", likedVideos); // Log state changes
+  // }, [likedVideos]);
 
   return (
     <div className="bg-gray-950 text-white min-h-screen p-8">

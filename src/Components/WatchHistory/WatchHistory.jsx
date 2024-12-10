@@ -49,7 +49,7 @@ function WatchHistory() {
             Watch History
           </h1>
           <ul className="space-y-6">
-            {history.map((video) => (
+            {history.slice().reverse().map((video) => (
               <li
                 key={video._id}
                 className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
