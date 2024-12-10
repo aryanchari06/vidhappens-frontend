@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.authStatus);
   const userData = useSelector((state) => state.auth.userData);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
@@ -100,7 +100,7 @@ function App() {
       {/* Header Section */}
       <div className="flex items-center px-4 py-2 bg-black shadow-lg">
         <button
-          className="text-white focus:outline-none mr-4"
+          className="text-white focus:outline-none"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           aria-label="Toggle Sidebar"
         >

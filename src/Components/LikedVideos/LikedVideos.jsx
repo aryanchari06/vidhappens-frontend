@@ -45,9 +45,9 @@ function LikedVideos() {
     getUserLikedVideos();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("Liked Videos updated:", likedVideos); // Log state changes
-  // }, [likedVideos]);
+  useEffect(() => {
+    console.log("Liked Videos updated:", likedVideos); // Log state changes
+  }, [likedVideos]);
 
   return (
     <div className="bg-gray-950 text-white min-h-screen p-8">
