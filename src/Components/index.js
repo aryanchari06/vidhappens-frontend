@@ -10,6 +10,7 @@ import LikedVideos from "./LikedVideos/LikedVideos";
 import UserPlaylists from "./UserPlaylists/UserPlaylists";
 import WatchHistory from "./WatchHistory/WatchHistory";
 import Tweets from "./Tweets/Tweets";
+import Settings from "./Settings/Settings";
 
 export {
   Header,
@@ -24,4 +25,5 @@ export {
   UserPlaylists,
   WatchHistory,
   Tweets,
+  Settings,
 };

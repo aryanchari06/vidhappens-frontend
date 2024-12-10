@@ -11,6 +11,7 @@ import PlaylistPage from "./PlaylistPage";
 import ChannelLayout from "./ChannelLayout";
 import TweetsPage from "./TweetsPage";
 import UploadVideo from "./UploadVideo";
+import Settings from "./Settings";
 
 export {
   Home,
@@ -26,4 +27,5 @@ export {
   ChannelLayout,
   TweetsPage,
   UploadVideo,
+  Settings,
 };

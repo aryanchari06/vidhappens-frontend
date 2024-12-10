@@ -21,7 +21,8 @@ import {
   PlaylistPage,
   ChannelLayout,
   TweetsPage,
-  UploadVideo
+  UploadVideo,
+  Settings
 } from "./Pages/pagesIndex.js";
 
 const router = createBrowserRouter([
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "/upload",
         element: <UploadVideo />,
+      },
+      {
+        path: "/u/settings",
+        element: <Settings />,
       },
     ],
   },

@@ -80,6 +80,7 @@ function Sidebar() {
               </ul>
             )}
           </div>
+          <Link to='/u/settings' className="text-lg opacity-60 hover:opacity-100">Settings</Link>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-6">

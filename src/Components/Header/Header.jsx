@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout as authLogout } from "../../Store/authSlice";
 import { removeSubscriptionData } from "../../Store/subscriptionsSlice";
 import { setQueryVideos, clearQueryVideos } from "../../Store/queryVideosSlice";
 
 const Header = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [queryText, setQueryText] = useState("");
 
@@ -80,6 +81,7 @@ const Header = () => {
         const result = await response.json();
         console.log(result.data.docs);
         dispatch(setQueryVideos(result.data.docs));
+        navigate('/')
       } else {
         console.log("Error while fetching queried videos");
       }
