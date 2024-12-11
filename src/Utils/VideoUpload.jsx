@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 function VideoUpload() {
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
@@ -12,28 +13,34 @@ function VideoUpload() {
 
   const [videoPreview, setVideoPreview] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [videoUploadMessage, setVideoUploadMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate()
 
   const onFormSubmit = async (data) => {
     try {
       const formData = new FormData();
-  
+
       // Append text fields
       formData.append("title", data.title);
       formData.append("description", data.description);
-  
+
       // Append video and thumbnail files
       formData.append("videoFile", data.video[0]); // Access the file directly
       formData.append("thumbnail", data.thumbnail[0]);
-  
+
       const response = await fetch(`${url}/videos`, {
         method: "POST",
         credentials: "include",
         body: formData,
       });
-  
+
       if (response.ok) {
         const result = await response.json();
-        // console.log(result.data);
+        console.log(result);
+        setVideoUploadMessage(result.message);
+        setShowToast(true);
+        
       } else {
         console.error("Error while uploading video:", response.statusText);
       }
@@ -41,7 +48,6 @@ function VideoUpload() {
       console.error("Error during API call:", error);
     }
   };
-  
 
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
@@ -59,8 +65,23 @@ function VideoUpload() {
     }
   };
 
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+        navigate('/')
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup on component unmount or re-render
+    }
+  }, [showToast]);
+
   return (
     <div className="max-w-5xl mx-auto bg-gradient-to-b from-black to-gray-900 text-white p-8 rounded-lg shadow-2xl">
+       {showToast && (
+        <div className="fixed bottom-4 right-4 bg-purple-600 text-white py-2 px-4 rounded-lg shadow-lg z-50">
+          {videoUploadMessage || "Video uploaded successfully!"}
+        </div>
+      )}
       <h1 className="text-4xl font-bold mb-6 text-purple-400 text-center">
         Upload Your Video
       </h1>

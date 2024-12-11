@@ -134,10 +134,6 @@ function VideoPlayer() {
     }
   };
 
-  const handleDelete = async ({ videoId }) => {
-    deleteVideo(videoId);
-    deleteLikeDocument(videoId);
-  };
   const deleteVideo = async (videoId) => {
     try {
       const response = await fetch(`${url}/videos/${videoId}`, {
@@ -152,22 +148,6 @@ function VideoPlayer() {
       }
     } catch (error) {
       console.log("Error during api call: ", error);
-    }
-  };
-  const deleteLikeDocument = async (videoId) => {
-    try {
-      const response = await fetch(`${url}/likes/delete-doc/${videoId}`, {
-        method: "POST",
-        credentials: "include",
-      });
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result);
-      } else {
-        console.log("Error while deleting the like document");
-      }
-    } catch (error) {
-      console.log("Error during API call: ", error);
     }
   };
 
@@ -274,7 +254,7 @@ function VideoPlayer() {
       </div>
 
       <DeleteVideoModal
-        handleDelete={() => handleDelete(video._id)}
+        handleDelete={() => deleteVideo(video._id)}
         isOpen={isModalOpen}
         closeModal={closeModal}
       />

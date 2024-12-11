@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.authStatus);
   const userData = useSelector((state) => state.auth.userData);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(authStatus);
 
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
@@ -26,7 +26,7 @@ function App() {
       });
       if (response.ok) {
         const user = await response.json();
-        console.log(user.data)
+        console.log(user.data);
         dispatch(authLogin(user.data));
       } else {
         console.error(
@@ -46,11 +46,26 @@ function App() {
     try {
       const [videosRes, playlistsRes, subscriptionsRes, statsRes, tweetsRes] =
         await Promise.all([
-          fetch(`${url}/dashboard/videos`, { method: "GET", credentials: "include" }),
-          fetch(`${url}/playlist/user/${userData._id}`, { method: "GET", credentials: "include" }),
-          fetch(`${url}/subscriptions/c/${userData._id}`, { method: "GET", credentials: "include" }),
-          fetch(`${url}/dashboard/stats`, { method: "GET", credentials: "include" }),
-          fetch(`${url}/tweets/user/${userData._id}`, { method: "GET", credentials: "include" }),
+          fetch(`${url}/dashboard/videos`, {
+            method: "GET",
+            credentials: "include",
+          }),
+          fetch(`${url}/playlist/user/${userData._id}`, {
+            method: "GET",
+            credentials: "include",
+          }),
+          fetch(`${url}/subscriptions/c/${userData._id}`, {
+            method: "GET",
+            credentials: "include",
+          }),
+          fetch(`${url}/dashboard/stats`, {
+            method: "GET",
+            credentials: "include",
+          }),
+          fetch(`${url}/tweets/user/${userData._id}`, {
+            method: "GET",
+            credentials: "include",
+          }),
         ]);
 
       if (videosRes.ok) {
@@ -65,9 +80,12 @@ function App() {
 
       if (subscriptionsRes.ok) {
         const subscriptions = await subscriptionsRes.json();
-        const subscribedChannels = subscriptions.data[0]?.channelsUserSubscribedTo;
-        // console.log(subscribedChannels)
-        dispatch(setSubscriptionData(subscribedChannels));
+        const subscribedChannelsDoc = await subscriptions.data;
+        const channels = await subscribedChannelsDoc.map(
+          (channel) => channel.channelUserSubscribedTo[0]
+        );
+        dispatch(setSubscriptionData(channels));
+        // console.log(channels);
       }
 
       if (statsRes.ok) {
@@ -87,7 +105,8 @@ function App() {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+    setIsSidebarOpen(authStatus)
+  }, [authStatus]);
 
   useEffect(() => {
     if (authStatus) {

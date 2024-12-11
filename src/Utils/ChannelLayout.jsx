@@ -15,6 +15,8 @@ function ChannelLayout({ isUserChannel }) {
   const subscribedChannels = useSelector(
     (state) => state.subscriptions.channels
   );
+
+  // console.log("subscribed channels: ", subscribedChannels)
   const [subscribed, setSubscribed] = useState(false);
 
   const authStatus = useSelector((state) => state.auth.authStatus);
@@ -28,7 +30,7 @@ function ChannelLayout({ isUserChannel }) {
 
       if (response.ok) {
         const result = await response.json();
-        // console.log(result.data);
+        console.log(result.data);
         setChannel(result.data);
       } else {
         console.log(
@@ -96,12 +98,15 @@ function ChannelLayout({ isUserChannel }) {
       return;
     }
     try {
+      console.log(channel._id)
       const response = await fetch(`${url}/subscriptions/c/${channel._id}`, {
         method: "POST",
         credentials: "include",
       });
       if (response.ok) {
         setSubscribed((prev) => !prev);
+        const result = await response.json()
+        console.log(result)
       } else {
         console.error("Error toggling subscription.");
       }
