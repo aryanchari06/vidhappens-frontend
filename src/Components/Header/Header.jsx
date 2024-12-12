@@ -103,7 +103,7 @@ const Header = () => {
           onClick={handleLogoClick}
           className="text-3xl font-extrabold text-purple-500 tracking-wide hover:text-purple-400 transition duration-300 cursor-pointer"
         >
-          <Link to="/">PixelPlay</Link>
+          <Link to="/">VidHappens</Link>
         </div>
 
         {/* Search Bar */}

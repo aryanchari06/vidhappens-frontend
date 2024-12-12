@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo or Brand Name */}
         <div className="text-xl font-bold text-purple-500">
-          Clipocalypse
+        VidHappens
         </div>
 
         {/* Navigation Links */}
@@ -40,7 +40,7 @@ const Footer = () => {
 
         {/* Copyright Information */}
         <div className="text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} Clipocalypse. All rights reserved.
+          &copy; {new Date().getFullYear()} VidHappens. All rights reserved.
         </div>
       </div>
     </footer>

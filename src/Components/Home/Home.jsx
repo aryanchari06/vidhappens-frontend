@@ -59,7 +59,7 @@ const Home = () => {
       ) : (
         <div className="bg-gradient-to-b from-gray-900 via-black to-gray-950 text-center py-20 px-6">
           <h1 className="text-4xl md:text-5xl font-bold text-purple-500 mb-4">
-            Welcome to Clipocalypse
+            Welcome to VidHappens
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto mb-6">
             Share your favorite videos and discover new content from creators
