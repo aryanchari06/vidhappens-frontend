@@ -19,7 +19,7 @@ function App() {
   const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1`;
 
   const getCurrentUser = async () => {
-    console.log(url)
+    // console.log(url)
     try {
       const response = await fetch(`${url}/users/current-user`, {
         method: "GET",

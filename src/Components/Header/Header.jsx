@@ -42,6 +42,9 @@ const Header = () => {
       const response = await fetch(`${url}/users/logout`, {
         method: "POST",
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       if (response.ok) {
         const result = await response.json();
