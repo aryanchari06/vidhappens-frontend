@@ -172,7 +172,7 @@ function Signup() {
             {...register("avatar", {
               required: "Avatar is required",
             })}
-            className="w-full px-4 py-2 text-white border-b border-b-gray-600 bg-transparent outline-none focus:border-b-purple-600 focus:border-b-2 duration-300 focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            className="p-3 border border-gray-600 bg-transparent rounded-md focus:border-purple-600 transition-all duration-200"
           />
           {errors.avatar && (
             <p className="text-red-500 text-sm mt-2">{errors.avatar.message}</p>
@@ -189,7 +189,7 @@ function Signup() {
             id="cover-image"
             accept="image/png, image/jpg, image/jpeg"
             {...register("coverImage")}
-            className="w-full px-4 py-2 text-white border-b border-b-gray-600 bg-transparent outline-none focus:border-b-purple-600 focus:border-b-2 duration-300 focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            className="p-3 border border-gray-600 bg-transparent rounded-md focus:border-purple-600 transition-all duration-200"
           />
         </div>
 
