@@ -23,16 +23,18 @@ function App() {
       const response = await fetch(`${url}/users/current-user`, {
         method: "GET",
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       if (response.ok) {
         const user = await response.json();
-        console.log(user.data);
+        console.log(user);
         dispatch(authLogin(user.data));
       } else {
         console.error(
           "Error fetching user:",
           response.status,
-          response.statusText
         );
       }
     } catch (error) {

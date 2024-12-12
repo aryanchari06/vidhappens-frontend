@@ -12,7 +12,7 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.userData = action.payload;
       state.authStatus = true;
-      // console.log("User data in store: ",state.userData)
+      console.log("User data in store: ",state.userData)
     },
     logout: (state, action) => {
       state.userData = null;

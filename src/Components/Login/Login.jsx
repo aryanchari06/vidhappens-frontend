@@ -48,7 +48,7 @@ function Login() {
         console.error("Login failed", response.statusText);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Login error", error);
     }
   };
 
