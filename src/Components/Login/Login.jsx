@@ -56,8 +56,8 @@ function Login() {
     <div>
       {/* Conditional rendering based on authentication status */}
       {!authStatus ? (
-        <div className="min-h-screen bg-black text-white flex items-center justify-center">
-          <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className=" bg-black text-white flex my-10 justify-center">
+          <div className=" p-8 bg-white bg-opacity-5 rounded-lg shadow-lg w-full max-w-xl">
             <h1 className="text-3xl font-bold text-purple-500 text-center mb-6">
               Login to Watch Videos
             </h1>
@@ -83,7 +83,8 @@ function Login() {
                       message: "Invalid email or username format",
                     },
                   })}
-                  className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  className="w-full px-4 py-2 outline-none text-white border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+                  placeholder="Enter your email..."
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-2">
@@ -110,7 +111,8 @@ function Login() {
                       message: "Minimum password length should be 4.",
                     },
                   })}
-                  className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  className="w-full px-4 py-2 outline-none text-white border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+                  placeholder="Enter your password..."
                 />
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-2">

@@ -2,12 +2,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import {login as authLogin} from '../../Store/authSlice'
+import { login as authLogin } from "../../Store/authSlice";
 import { useNavigate } from "react-router";
 
 function Signup() {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,7 +16,9 @@ function Signup() {
 
   const formSubmit = async (formData) => {
     try {
-      const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/users/register`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_BASE_URL
+      }/api/v1/users/register`;
 
       const formDataToSend = new FormData();
       formDataToSend.append("fullname", formData.fullname);
@@ -41,8 +43,8 @@ function Signup() {
 
       if (registerUser.ok) {
         console.log("User registered successfully!");
-        dispatch(authLogin(response.data))
-        navigate('/')
+        dispatch(authLogin(response.data));
+        navigate("/");
       } else {
         console.log("Registration failed:", response.message);
       }
@@ -52,17 +54,17 @@ function Signup() {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold text-purple-500 mb-8">
+    <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center my-8">
+      <h1 className="text-3xl font-bold text-purple-500 mb-4">
         Signup for free!
       </h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
-        className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-black p-8 rounded-lg shadow-lg w-full max-w-xl"
       >
         {/* Fullname */}
         <div className="mb-6">
-          <label htmlFor="fullname" className="block mb-2 text-gray-400">
+          <label htmlFor="fullname" className="block mb-2 text-white">
             Full Name:
           </label>
           <input
@@ -75,16 +77,19 @@ function Signup() {
                 message: "Full name should have a minimum length of 3",
               },
             })}
-            className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-4 py-2 outline-none text-white border-b border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            placeholder="Enter your full name..."
           />
           {errors.fullname && (
-            <p className="text-red-500 text-sm mt-2">{errors.fullname.message}</p>
+            <p className="text-red-500 text-sm mt-2">
+              {errors.fullname.message}
+            </p>
           )}
         </div>
 
         {/* Email */}
         <div className="mb-6">
-          <label htmlFor="email" className="block mb-2 text-gray-400">
+          <label htmlFor="email" className="block mb-2 text-white">
             Email:
           </label>
           <input
@@ -97,7 +102,8 @@ function Signup() {
                 message: "Invalid email format",
               },
             })}
-            className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-4 py-2 outline-none text-white border-b border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            placeholder="Enter your email ID..."
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
@@ -106,7 +112,7 @@ function Signup() {
 
         {/* Username */}
         <div className="mb-6">
-          <label htmlFor="username" className="block mb-2 text-gray-400">
+          <label htmlFor="username" className="block mb-2 text-white">
             Username:
           </label>
           <input
@@ -119,16 +125,19 @@ function Signup() {
                 message: "Invalid username format",
               },
             })}
-            className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-4 py-2 outline-none text-white border-b border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            placeholder="Enter a username..."
           />
           {errors.username && (
-            <p className="text-red-500 text-sm mt-2">{errors.username.message}</p>
+            <p className="text-red-500 text-sm mt-2">
+              {errors.username.message}
+            </p>
           )}
         </div>
 
         {/* Password */}
         <div className="mb-6">
-          <label htmlFor="password" className="block mb-2 text-gray-400">
+          <label htmlFor="password" className="block mb-2 text-white">
             Password:
           </label>
           <input
@@ -141,16 +150,19 @@ function Signup() {
                 message: "Password should have a minimum length of 6",
               },
             })}
-            className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-4 py-2 outline-none text-white border-b border-b-gray-600 bg-transparent focus:border-b-purple-600 focus:border-b-2 duration-300  focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
+            placeholder="Enter a password..."
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-2">{errors.password.message}</p>
+            <p className="text-red-500 text-sm mt-2">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
         {/* Avatar */}
         <div className="mb-6">
-          <label htmlFor="avatar" className="block mb-2 text-gray-400">
+          <label htmlFor="avatar" className="block mb-2 text-white">
             Avatar:
           </label>
           <input
@@ -160,7 +172,7 @@ function Signup() {
             {...register("avatar", {
               required: "Avatar is required",
             })}
-            className="w-full text-white"
+            className="w-full px-4 py-2 text-white border-b border-b-gray-600 bg-transparent outline-none focus:border-b-purple-600 focus:border-b-2 duration-300 focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
           />
           {errors.avatar && (
             <p className="text-red-500 text-sm mt-2">{errors.avatar.message}</p>
@@ -169,7 +181,7 @@ function Signup() {
 
         {/* Cover Image */}
         <div className="mb-6">
-          <label htmlFor="cover-image" className="block mb-2 text-gray-400">
+          <label htmlFor="cover-image" className="block mb-2 text-white">
             Cover Image:
           </label>
           <input
@@ -177,7 +189,7 @@ function Signup() {
             id="cover-image"
             accept="image/png, image/jpg, image/jpeg"
             {...register("coverImage")}
-            className="w-full text-white"
+            className="w-full px-4 py-2 text-white border-b border-b-gray-600 bg-transparent outline-none focus:border-b-purple-600 focus:border-b-2 duration-300 focus:shadow-[0_15px_20px_-10px_rgb(147,54,234)]"
           />
         </div>
 
